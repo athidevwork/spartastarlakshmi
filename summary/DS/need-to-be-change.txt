@@ -1,0 +1,13 @@
+
+register Alert and print,
+
+ msg while admitting the patient
+
+print,
+
+
+
+
+
+
+

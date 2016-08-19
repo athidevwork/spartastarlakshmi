@@ -1,0 +1,15 @@
+$cmd = "select * from procedure_details where bill_number='1453393647'";
+	$cmd_result = mysql_query($cmd);
+	while($cmd_array = mysql_fetch_array($cmd_result)){
+		
+		$cmd_result_array[] = array('patient_id'=>$cmd_array['patient_id'],'ip_id'=>$cmd_array['ip_no'],'type'=>'Procedure','fees'=>$cmd_array['fees_amount'],'description'=>$cmd_array['procedure_name'].'-'.$cmd_array['consultant'],'bill_no'=>$cmd_array['bill_number'],'created_by'=>'Admin','created_on'=>$cmd_array['created_date'],'paid_status'=>$cmd_array['paid_status']);
+		
+	}
+	
+	//print '<pre>';print_r($cmd_result_array);print '</pre>';
+	
+	//echo count($cmd_result_array);
+	foreach($cmd_result_array as $key => $value){
+		print_r($value);
+	}
+	exit;

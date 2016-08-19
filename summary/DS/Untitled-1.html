@@ -1,0 +1,191 @@
+$pdf->SetFont('times','',12);	
+		
+		$pdf->MultiCell(14, 2, 'Date :', 1, 'L', 1, 0);
+		
+		
+		$pdf->MultiCell(26,2, ($pat->cdate!=0) ? date('d/m/Y',$pat->cdate) : '', '1', 'L', 1, 0);
+		
+	
+		$pdf->SetTextColor(0,0,0);
+		$pdf->MultiCell(15, 2, 'IP No :', 1, 'L', 1, 0);
+		$pdf->MultiCell(18, 2, $pat->ipno, '1', 'L', 1, 0);
+		
+		$pdf->MultiCell(22, 1, 'MRD No:', 1, 'L', 1, 0);
+		$pdf->MultiCell(19, 1, $pat->mrdno, 1, 'L', 1, 0);
+		
+		$pdf->SetTextColor(0,0,0);
+		$pdf->MultiCell(13, 4, 'Ward:', 1, 'L', 1, 0);
+		
+		$pdf->MultiCell(30, 4, $pat->ward, '1', 'L', 1, 0);
+				
+		$pdf->SetTextColor(0,0,0);
+		$pdf->SetFont('times','',13);
+		
+		
+		$pdf->SetTextColor(0,0,0);
+		$pdf->MultiCell(22, 2, 'Room No:', 1, 'L', 1, 0);
+		
+		$pdf->MultiCell(25, 1, $pat->roomno, '1', 'L', 1, 0);
+		$pdf->Ln();
+		
+		$pdf->SetTextColor(0,0,0);
+		$pdf->MultiCell(18, 4, 'Reg No:', 1, 'L', 1, 0);
+		
+		$pdf->MultiCell(25, 1, $pat->regno, '1', 'L', 1, 0);
+		$pdf->Ln();
+		$pdf->MultiCell(19, 4, 'Name    :', 1, 'L', 1, 0);
+		$pdf->SetTextColor(0,0,0);
+		$pdf->MultiCell(98, 4, $pat->name, '1', 'L', 1, 0);
+		
+		$pdf->SetTextColor(0,0,0);
+		$pdf->SetFont('times','',13);
+		$pdf->MultiCell(13, 1, 'Age :', 1, 'L', 1, 0);
+		$pdf->SetTextColor(0,0,0);
+		
+		if( $pat->age != 0 ) 			
+			{ 
+			
+			$pdf->MultiCell(30, 1, $pat->age, '1', 'L', 1, 0);
+			 } 
+			
+		elseif( ($pat->dob <= time()) && ($pat->dob != 0) ) { $pdf->MultiCell(20, 4, dateDiff($pat->dob), '1', 'L', 1, 0); }
+		
+		$pdf->SetTextColor(0,0,0);
+		$pdf->MultiCell(12, 1, 'Sex:', 1, 'L', 1, 0);
+		
+		$pdf->MultiCell(40, 1, ': '.($pat->gender==1) ? 'Male' : 'Female', '1', 'L', 1, 0);
+		
+		$pdf->Ln(); 
+		
+		$pdf->SetTextColor(0,0,0);
+		$pdf->MultiCell(20, 4, 'Address :', 1, 'L', 1, 0);
+		
+		$pdf->MultiCell(70, 4, $pat->address, '1', 'L', 1, 0);
+		$pdf->Ln();
+		
+		$pdf->SetTextColor(0,0,0);
+		$pdf->MultiCell(20, 1, 'City       :', 1, 'L', 1, 0);
+		
+		$pdf->MultiCell(40, 4, $pat->city, '1', 'L', 1, 0);
+		$pdf->Ln();
+		
+		$pdf->SetTextColor(0,0,0);
+		$pdf->MultiCell(20, 1, 'PIN        :', 1, 'L', 1, 0);
+		
+		$pdf->MultiCell(20, 4, $pat->pin, '1', 'L', 1, 0);
+			$pdf->Ln();
+			$pdf->MultiCell(45, 1, 'Consultant               :', 1, 'L', 1, 0);
+		
+		$pdf->MultiCell(120, 1, Doctor::GetName($pat->consultant), '1', 'L', 1, 0);
+		 $pdf->Ln();
+		 
+		$pdf->SetTextColor(0,0,0);
+		$pdf->MultiCell(45, 1, 'Date of Admission  :', 1, 'L', 1, 0);
+		
+		$pdf->MultiCell(32, 4, ($pat->admdate!=0) ? date('d/m/Y',$pat->admdate) : '', '1', 'L', 1, 0);
+		$pdf->Ln();
+		$pdf->SetTextColor(0,0,0);
+		$pdf->MultiCell(45, 1, 'Date of Discharge   :', 1, 'L', 1, 0);
+		
+		$pdf->MultiCell(40, 4, ($pat->disdate!=0) ? date('d/m/Y',$pat->disdate) : '', '1', 'L', 1, 0);
+		
+		$pdf->Ln(); 
+		
+	$pdf->SetTextColor(0,0,0);
+		$pdf->MultiCell(45, 1, 'Allergies                  :', 1, 'L', 1, 0);
+		
+		$pdf->MultiCell(40, 4, $dis->operation, '1', 'L', 1, 0);
+		
+		$pdf->Ln(); 
+		
+		
+
+		 
+		$dis = Discharge::model()->findByPk($id);
+		$html = '';
+		 	
+		//$dia = str_replace('|','<br>',$dis->diagnosis); 
+		
+			
+		//if($dis->diagnosis!='') { $html .= 'Diagnosis:'; $html .= $dia; }	
+		
+		$dia = str_replace('|','<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',$dis->diagnosis);
+		$html .='<tr>
+    		<td width="135"> Diagnosis </td>
+    		<td width="180">:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.$dia.'</td>
+    		<td width="180">&nbsp;</td>
+    		<td width="200">&nbsp;</td>
+  			</tr>';
+		
+
+		
+		
+		//$pdf->writeHTML($html, true, false, true, false, '');
+		
+		//if($dis->operation!='') { $html .= '<h2>Allergies</h2>'; $html .= $dis->operation; }		
+		 
+	
+		  if($dis->history!='')
+		 { 
+		
+		 $html .='<tr>
+		 
+    		<td colspan="4"><h3>B. History Of Present Illness <br></h3> </td>
+    		
+  			</tr>';
+			
+		 $html .='<tr>
+		 
+    		<td width="128"> Chief Complaints   :  </td>
+    		<td colspan="3">'.$dis->history.'</td>
+  			</tr>';
+		 
+		//$pdf->writeHTML($html, true, false, true, false, '');
+		 }	
+		$html .='</table>';
+		
+		//$pdf->writeHTML($html, true, false, true, false, '');
+		
+		if($dis->dm!=1) { $html .= '<br><History of Diabetes Mallites : No'; } else { $html .= '<br>History of Diabetes Mallites: Yes'; } 	
+		
+		if($dis->past_history!='') { $html .= '<h2>Past History</h2>'; $html .= $dis->past_history; }		
+		
+		if($dis->personal_history!='') { $html .= '<h2> C.Personal History</h2>'; $html .= $dis->personal_history; }		
+		
+		if($dis->family_history!='') { $html .= '<h2>D.Family History</h2>'; $html .= $dis->family_history; }	
+		if($dis->advice_on_discharge!='') { $html .= '<h2>E. Advice on Discharge</h2>'; $html .= $dis->advice_on_discharge; }			
+		
+		if($dis->on_examination!='') { $html .= '<h2> On Examination</h2>'; $html .= $dis->on_examination; }		
+		
+		if($dis->investigation!='') { $html .= '<h2>Investigation</h2>'; $html .= $dis->investigation; }		
+		
+		
+			
+		
+			
+		
+		
+		
+		if($dis->other_consultant!='') { $html .= '<h2>F.Other Consultant</h2>'; $html .= $dis->other_consultant; }		
+		
+		if($dis->next_visit!='') { $html .= '<h2>Next Visit</h2>'; $html .= $dis->next_visit; }		
+		//$pdf->writeHTML($html, true, false, true, false, '');
+		$html .= 'Please call for Emergency 26641414, 26641416, 45530080 If you have any of the following symptoms';
+		
+		/*$html .= '<ol>
+		
+		<li>Fever>101.5`F.</li>
+		<li>Onset of new pain or worsening of previous pain.</li>
+		<li>Vomiting.</li>
+		<li>Altered level of Consiousness.</li>
+		<li>Discharge from the operative wound.</li>
+		<li>Worsening of any Symptoms.</li>
+		<li>Other Significant Concerns.</li>
+		
+		</ol><br>';*/
+		
+		$html .= '<div style="text-align:right">Dr.Maduri Balaji</div>';
+		
+		
+		
+		$html .= '<hr>';

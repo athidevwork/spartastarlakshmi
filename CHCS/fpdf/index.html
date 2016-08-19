@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html lang="en" class="ie6 ielt8"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="ie7 ielt8"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="ie8"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+<meta charset="utf-8">
+<title>Sparta Login</title>
+<link rel="stylesheet" type="text/css" href="stylelog.css" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+</head>
+<body>
+
+<div class="shakeit">
+<h1 style="margin-top:100px;font-size:35px; color:#FFFFFF; font-weight:500" align="center">Sparta Software Solutions</h1>
+</div>
+<div class="container">
+
+
+	<section id="content">
+		<form action="">
+			<h1>Login</h1>
+			<div>
+				<input type="text" placeholder="Username" name="username" />
+			</div>
+			<div>
+				<input type="password" placeholder="Password" name="password" />
+			</div>
+			<div>
+			<?php if (isset($_SESSION['loginerror'])):
+				echo '<div style="text-align:center"><h4 style="color:#FF0000;font-size:small;">'.$_SESSION['loginerror'].'</h4><br/></div>';
+				unset($_SESSION['loginerror']);
+			endif; ?> 
+				<input type="submit" value="Log in" />
+				<!--
+				<a href="#">Lost your password?</a>
+				<a href="#">Register</a> -->
+			</div>
+		</form>
+		<!-- form -->
+		<div class="button">
+		<h3><span style="color:#003300;">By </span><a style="color:#563D64; text-decoration:none" href="http://spartasolutions.in/" target="_blank"> Sparta Software Solutions</a></h3>
+		</div><!-- button -->
+	</section><!-- content -->
+</div>
+<!-- container -->
+</body>
+</html>
