@@ -19,14 +19,14 @@ JOIN tbl_productlist ON tbl_stockadjustment.id = tbl_productlist.id WHERE tbl_st
 	$res = mysql_query($sql);
 	$xtotal = 0;
 	while($rs = mysql_fetch_array($res))
-	//{
+	{
 	//$productid=$rs['productid'];
 		//$sup = $rs['supplierid'];
 		//$xtotal += $rs['invoiceamt'];
 		//$s = mysql_query("SELECT * FROM tbl_productlist WHERE id='$productid'");
 		//$r = mysql_fetch_array($s);
 		//$supplier = $r['productname'] . '<br />'. $r['addressline1'] . '<br />'. $r['addressline2'] . '<br />'. $r['addressline3'] . '<br />'. $r['contactno1'];
-		$array[] = array("datentime"=> implode("/", array_reverse(explode("-",date("Y-m-d"),$rs['datentime'])))), "productname"=>$r['productname'],  "batchno" => $rs['batchno'], "qty" => $rs['qty'],"expiry" => $rs['expiry'],"adjreason" => $rs['adjreason'],"adjtype" => $rs['adjtype']); 
+		$array[] = array("datentime"=> implode("/", array_reverse(explode("-",date("Y-m-d"),$rs['datentime']))), "productname"=>$r['productname'],  "batchno" => $rs['batchno'], "qty" => $rs['qty'],"expiry" => $rs['expiry'],"adjreason" => $rs['adjreason'],"adjtype" => $rs['adjtype']); 
 	}
 	$array[] = array("tamt"=>number_format($xtotal,2,".",""));
 	echo json_encode($array);

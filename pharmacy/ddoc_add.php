@@ -34,7 +34,7 @@ date_default_timezone_set('Asia/Kolkata');
 			//$insertid = mysql_insert_id();
 				//$update = mysql_query("UPDATE clinical_others SET clinical_history_id='$insertid' WHERE patient_id='$pid' AND clinical_history_id=''");
 				
-				}
+				//}
 				if($update)
 					echo 'success';
 				else
@@ -42,5 +42,4 @@ date_default_timezone_set('Asia/Kolkata');
 			//}
 			mysql_close($db2);
 	}
-
 ?>
