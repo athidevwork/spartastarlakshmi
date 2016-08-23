@@ -52,7 +52,7 @@
                     </li>
 					<?php } if($sql['masterentry']==1) { ?>
 					<li>
-                        <a href="master_entry.php"><span class="fa fa-cogs"></span> <span class="xn-text">Master Entry</span></a>                        
+                        <a href="master_entry.php"><span class="fa fa-cogs"></span> <span class="xn-text">Settings</span></a>                        
                     </li>  
 					<?php } if($sql['reports']==1) { ?>
 					<li>

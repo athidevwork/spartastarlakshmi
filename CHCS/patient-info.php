@@ -1078,7 +1078,7 @@ if($pid !="" && $sql['patientinfo']==1)
                                                 <p class="comment-head">
                                                     
                                                 </p>
-                                                <p>Patient Registrated.</p>
+                                                <p>Patient Registration Complete.</p>
                                                 
                                             </div>                                            
                                              '; 

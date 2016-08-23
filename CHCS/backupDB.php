@@ -1,13 +1,13 @@
-<?php 
+<?php
 backup_tables('localhost','root','','dps_master');
 backup_tables('localhost','root','','dps_patients');
-backup_tables('localhost','root','','ds-db');
 backup_tables('localhost','root','','pharmacy');
+backup_tables('localhost','root','','ds-db');
 
 /* backup the db OR just a table */
 function backup_tables($host,$user,$pass,$name,$tables = '*')
 {
-	
+	$browserResponse.="Attempting to connect to Database".$name;	
 	$link = mysql_connect($host,$user,$pass);
 	mysql_select_db($name,$link);
 	
@@ -31,16 +31,21 @@ function backup_tables($host,$user,$pass,$name,$tables = '*')
 	{
 		$result = mysql_query('SELECT * FROM '.$table);
 		$num_fields = mysql_num_fields($result);
+		$numRows = mysql_num_rows($result);
 		
 		$return.= 'DROP TABLE '.$table.';';
 		$row2 = mysql_fetch_row(mysql_query('SHOW CREATE TABLE '.$table));
 		$return.= "\n\n".$row2[1].";\n\n";
 		
+		$browserResponse.=$table.'->'.$numRows.", ";
+		if ($numRows > 0)
+			$return.= 'INSERT INTO '.$table.' VALUES'."\n";		
 		for ($i = 0; $i < $num_fields; $i++) 
 		{
+			$currentRow = 0;
 			while($row = mysql_fetch_row($result))
 			{
-				$return.= 'INSERT INTO '.$table.' VALUES(';
+				$return.= '(';				
 				for($j=0; $j < $num_fields; $j++) 
 				{
 					$row[$j] = addslashes($row[$j]);
@@ -48,7 +53,10 @@ function backup_tables($host,$user,$pass,$name,$tables = '*')
 					if (isset($row[$j])) { $return.= '"'.$row[$j].'"' ; } else { $return.= '""'; }
 					if ($j < ($num_fields-1)) { $return.= ','; }
 				}
-				$return.= ");\n";
+				$currentRow++;
+				//$browserResponse.="currentRow=".$currentRow."\n";
+				if ($currentRow < $numRows) { $return.= "),\n"; }
+				else $return.= ");\n";
 			}
 		}
 		$return.="\n\n\n";
@@ -61,6 +69,8 @@ function backup_tables($host,$user,$pass,$name,$tables = '*')
 	//$handle = fopen('db-backup-'.$backup_name.'-'.(md5(implode(',',$tables))).'.sql','w+');
 	fwrite($handle,$return);
 	fclose($handle);
-	echo "DB Export Complete - ".$date;
+	
+	$browserResponse.="\nDB Export for DB ".$name." Complete - ".$date."\n";
+	echo str_replace(array("\r\n","\r","\n"),'<br>',$browserResponse);
 }
 ?>
